@@ -18,7 +18,7 @@ def read_file_gen():
 
 def lambda_handler(event, context):
     
-    s3.download_file('Bucket', 'aws-waf-logs', '/tmp/test.txt' )
+    s3_cli.download_file('Bucket', 'aws-waf-logs', '/tmp/test.txt' )
     it = read_file_gen()
 
     while True:
@@ -53,5 +53,5 @@ def lambda_handler(event, context):
         except StopIteration:
             break
 
-    s3.upload_file( '/tmp/after.json', 'Bucket', 'after.json')
+    s3_cli.upload_file( '/tmp/after.json', 'Bucket', 'after.json')
 
