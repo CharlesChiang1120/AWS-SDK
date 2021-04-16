@@ -18,7 +18,7 @@ def read_file_gen():
 
 def lambda_handler(event, context):
     
-    s3_cli.download_file('Bucket', 'aws-waf-logs', '/tmp/test.txt' )
+    s3_cli.download_file('Bucket', 'aws-waf-logs', '/tmp/test.txt')
     it = read_file_gen()
 
     while True:
