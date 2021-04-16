@@ -9,11 +9,9 @@ import boto3
 import os
 import re
 import datetime
-time = datetime.datetime.now()
 
-s3 = boto3.client('s3')
-
-FILE_TO_READ = 'aws-waf-logs'
+s3_res = boto3.resource('s3')
+s3_cli = s3_res.meta.client
 
 def read_file_gen():
     with open('/tmp/test.txt') as f:
