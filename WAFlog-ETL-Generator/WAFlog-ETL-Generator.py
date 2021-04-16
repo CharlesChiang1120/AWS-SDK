@@ -6,8 +6,6 @@
 
 import json
 import boto3
-import os
-import re
 import datetime
 
 s3_res = boto3.resource('s3')
