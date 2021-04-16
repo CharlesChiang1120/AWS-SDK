@@ -27,7 +27,7 @@ def lambda_handler(event, context):
             
             convert_timestamp = lambda x: datetime.datetime.fromtimestamp(float((str(x).replace(" ", ""))[0:10])).isoformat() if len(str(x)) > 0 else 'NA'
             
-            waflog['timestamp']  = convert_timestamp(waflog['timestamp'])
+            waflog['timestamp'] = convert_timestamp(waflog['timestamp'])
             
             replaceblank = lambda x : str(x).replace(" ", "")
             log_length = lambda x : x if len(str(x)) > 0 else 'NA'
