@@ -23,8 +23,7 @@ def read_file_gen():
             yield json.loads(line)
 
 def lambda_handler(event, context):
-    
-    
+
     it = read_file_gen()
 
     while True:
