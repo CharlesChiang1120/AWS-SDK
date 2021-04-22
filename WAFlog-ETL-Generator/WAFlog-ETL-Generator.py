@@ -11,6 +11,12 @@ import datetime
 s3_res = boto3.resource('s3')
 s3_cli = s3_res.meta.client
 
+convert_timestamp = lambda x: datetime.datetime.fromtimestamp(float((str(x).replace(" ", ""))[0:10])).isoformat() if len(str(x)) > 0 else 'NA'
+replaceblank = lambda x: str(x).replace(" ", "")
+log_length = lambda x: x if len(str(x)) > 0 else 'NA'
+
+s3_cli.download_file('Bucket', 'aws-waf-logs', '/tmp/test.txt')
+
 def read_file_gen():
     with open('/tmp/test.txt') as f:
         for line in f:
@@ -18,20 +24,14 @@ def read_file_gen():
 
 def lambda_handler(event, context):
     
-    s3_cli.download_file('Bucket', 'aws-waf-logs', '/tmp/test.txt')
+    
     it = read_file_gen()
 
     while True:
         try:
             waflog = next(it)
-            
-            convert_timestamp = lambda x: datetime.datetime.fromtimestamp(float((str(x).replace(" ", ""))[0:10])).isoformat() if len(str(x)) > 0 else 'NA'
-            
             waflog['timestamp'] = convert_timestamp(waflog['timestamp'])
-            
-            replaceblank = lambda x: str(x).replace(" ", "")
-            log_length = lambda x: x if len(str(x)) > 0 else 'NA'
-            
+
             waflog['requestId'] = replaceblank(waflog['httpRequest']['requestId'])
             waflog['requestId'] = log_length(waflog['requestId'])
             
