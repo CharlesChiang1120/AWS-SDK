@@ -29,8 +29,8 @@ def lambda_handler(event, context):
             
             waflog['timestamp'] = convert_timestamp(waflog['timestamp'])
             
-            replaceblank = lambda x : str(x).replace(" ", "")
-            log_length = lambda x : x if len(str(x)) > 0 else 'NA'
+            replaceblank = lambda x: str(x).replace(" ", "")
+            log_length = lambda x: x if len(str(x)) > 0 else 'NA'
             
             waflog['requestId'] = replaceblank(waflog['httpRequest']['requestId'])
             waflog['requestId'] = log_length(waflog['requestId'])
@@ -53,5 +53,5 @@ def lambda_handler(event, context):
         except StopIteration:
             break
 
-    s3_cli.upload_file( '/tmp/after.json', 'Bucket', 'after.json')
+    s3_cli.upload_file('/tmp/after.json', 'Bucket', 'after.json')
 
